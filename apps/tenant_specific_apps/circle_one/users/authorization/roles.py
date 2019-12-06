@@ -1,5 +1,5 @@
 from apps.tenant_specific_apps.circle_one.users.models import UserProfile
-from utils import is_master_tenant
+from CircleOneV3.utils import is_master_tenant
 
 
 def user_role(user):

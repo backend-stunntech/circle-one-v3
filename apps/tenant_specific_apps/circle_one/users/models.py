@@ -3,8 +3,7 @@ from django.contrib.auth.models import AbstractUser
 from django.db import models
 from django.dispatch import receiver
 
-from apps.master.models import Tenant
-from utils import get_current_schema_name
+from CircleOneV3.utils import get_current_schema_name
 
 
 class UserProfile(models.Model):

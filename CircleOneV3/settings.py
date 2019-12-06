@@ -12,11 +12,16 @@ https://docs.djangoproject.com/en/2.2/ref/settings/
 import collections
 import os
 
+import boto3
+from tenant_schemas.storage import TenantStorageMixin
+
 # saas specific settings
 # ----------------------
 # master domain is localhost in local development
+
 MASTER_SCHEMA_NAME = 'public'
 MASTER_DOMAIN = os.environ.get('MASTER_DOMAIN', 'localhost')
+DEPLOYMENT_STAGE = os.environ.get('DEPLOYMENT_STAGE', 'local')
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -28,7 +33,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = '#l0+l1twfa$6ddz6sg7mshrr+u)pphb8vc#_+4(he%)33=ce_l'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.environ.get('DEPLOYMENT_STAGE') != 'production'
+DEBUG = DEPLOYMENT_STAGE != 'production'
 
 # TODO restrict hosts
 ALLOWED_HOSTS = [f".{MASTER_DOMAIN}", MASTER_DOMAIN]
@@ -180,8 +185,23 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
-
 STATIC_URL = '/static/'
+STATIC_ROOT = 'staticfiles'
+MEDIA_URL = '/media/'
+MEDIA_ROOT = 'uploads'
+
+AWS_PROFILE_NAME = os.environ.get('AWS_PROFILE', 'bluewhirl')
+
+if DEPLOYMENT_STAGE == 'local':
+    DEFAULT_FILE_STORAGE = 'tenant_schemas.storage.TenantFileSystemStorage'
+    STATICFILES_STORAGE = 'tenant_schemas.storage.TenantStaticFilesStorage'
+
+else:
+    STORAGE_S3_BUCKET_NAME = f"{DEPLOYMENT_STAGE}-django-storage-circleone"
+    DEFAULT_FILE_STORAGE = 'CircleOneV3.tenant_storage.S3MediaStorage'
+    STATICFILES_STORAGE = 'CircleOneV3.tenant_storage.S3StaticStorage'
+
+FRONTEND_MASTER_DOMAIN = 'bluewhirl.io'
 
 # django-tenant-schemas specific
 TENANT_MODEL = 'master.Tenant'
