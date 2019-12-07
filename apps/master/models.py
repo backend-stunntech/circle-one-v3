@@ -62,6 +62,8 @@ class SignUpRequest(TimeStampMixin, models.Model):
     last_name = models.CharField(max_length=256)
     phone = models.CharField(max_length=256)
 
+    verified = models.BooleanField(default=False)
+
     @classmethod
     def verify(cls, verification_token, admin_username):
         try:
@@ -69,18 +71,23 @@ class SignUpRequest(TimeStampMixin, models.Model):
         except cls.DoesNotExist:
             raise PermissionError
         else:
-            tenant = Tenant.create_tenant(request.tenant_domain, request.sub_domain)
-            with tenant_context(tenant):
-                with atomic():
-                    admin = User.objects.create(username=request.admin_username,
-                                                email=request.admin_username,
-                                                is_active=True,
-                                                is_staff=True)
-                    admin.set_password(request.password)
-                    admin.save()
-                    admin.get_profile.role = UserProfile.ROLE_ADMIN
-                    admin.get_profile.save()
-                    return tenant
+            if request.verified:
+                tenant = Tenant.objects.get(request.tenant_domain)
+            else:
+                tenant = Tenant.create_tenant(request.tenant_domain, request.sub_domain)
+                with tenant_context(tenant):
+                    with atomic():
+                        admin = User.objects.create(username=request.admin_username,
+                                                    email=request.admin_username,
+                                                    is_active=True,
+                                                    is_staff=True)
+                        admin.set_password(request.password)
+                        admin.save()
+                        admin.get_profile.role = UserProfile.ROLE_ADMIN
+                        admin.get_profile.save()
+                        request.verified = True
+                        request.save()
+            return tenant
 
     @property
     def verification_link(self):
