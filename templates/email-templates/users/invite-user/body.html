@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Invitation to bluewhirl.io</title>
+</head>
+<body>
+<p>Hi,</p>
+<br>
+<p>You have been added as an <b>{{ profile.role }}</b> in <b>{{ tenant.tenant_domain }}</b> by <b>{{ profile.invited_by.first_name }} {{ profile.invited_by.last_name }}</b>.</p>
+<br>
+<h5>Your login credentials are:</h5>
+<p>username: <b>{{ profile.user.username }}</b></p>
+<p>password: <b>{{ password }}</b></p>
+<br>
+<p>Click on the URL below to activate your account:</p>
+<a href="{{ tenant.login_link }}">Login</a>
+<br>
+<p>If the URL does not work, copy and paste it into your browser:
+{{ tenant.login_link }}</p>
+<p>Regards,</p>
+<p>{{ tenant.domain_url }}</p>
+<br/>
+<br/>
+<div><i>Powered by Bluewhirl Technologies P Ltd.</i></div>
+<div><i><a href="www.bluewhirl.io">www.bluewhirl.io</a></i></div>
+</body>
+</html>

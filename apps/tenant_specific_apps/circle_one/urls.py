@@ -1,13 +1,14 @@
-from django.contrib import admin
-from django.urls import path, include
-from rest_framework.routers import DefaultRouter
+from django.urls import include, path
+from drf_yasg.utils import swagger_auto_schema
+from rest_framework.authtoken.serializers import AuthTokenSerializer
+from rest_framework.authtoken.views import obtain_auth_token
 
-from apps.tenant_specific_apps.circle_one.users import views
-
-circle_one_api_router = DefaultRouter()
-circle_one_api_router.register('', views.UserViewSet, base_name='users')
+# built-in token generation api for login:
+obtain_auth_token = swagger_auto_schema(method='post',
+                                        operation_summary='Request token for user authentication',
+                                        request_body=AuthTokenSerializer)(obtain_auth_token)
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('api/v1/', include(circle_one_api_router.urls))
+    path('auth/', obtain_auth_token, name='auth'),
+    path('users/', include('apps.tenant_specific_apps.circle_one.users.urls')),
 ]

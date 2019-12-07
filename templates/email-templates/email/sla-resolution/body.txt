@@ -1,0 +1,1 @@
+Email With reference id ${this.actions && this.actions[0].refId} has not yet been resolved. ${(this.assignee)?'Assignee: '+this.assignee.username:'No one is assigned to this email yet'}

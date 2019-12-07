@@ -2,7 +2,7 @@ from uuid import uuid4
 
 from rest_framework import serializers
 
-from apps.master.models import SignUpRequest
+from apps.master.models import SignUpRequest, Tenant
 
 
 # class TenantSignupRequestSerializer(serializers.ModelSerializer):
@@ -42,13 +42,25 @@ from apps.master.models import SignUpRequest
 class TenantSignUpRequestSerializer(serializers.ModelSerializer):
     class Meta:
         model = SignUpRequest
-        exclude = ['verification_token']
+        exclude = ['verification_token', 'tenant_domain', 'created', 'updated', 'id']
         extra_kwargs = {
             'password': {
                 'write_only': True
             }
         }
 
+    def validate(self, attrs):
+        _, tenant_domain = attrs['admin_username'].split('@')
+        try:
+            Tenant.objects.get(tenant_domain=tenant_domain)
+        except Tenant.DoesNotExist:
+            attrs['tenant_domain'] = tenant_domain
+        else:
+            raise serializers.ValidationError({'admin_username': 'Tenant already exist.'})
+        return attrs
+
     def create(self, validated_data):
         validated_data['verification_token'] = uuid4()
-        return super().create(validated_data)
+        request = super().create(validated_data)
+        request.send_verification_email()
+        return request

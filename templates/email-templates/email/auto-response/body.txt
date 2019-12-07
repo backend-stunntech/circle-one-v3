@@ -1,0 +1,11 @@
+Thank you for contacting CircleOne \n
+
+We have opened case for to address your issue. \n
+
+The details of your case are as follows: \n
+
+Subject: ${this.subject}
+Severity: Normal
+
+Sincerely,
+The CircleOne Team

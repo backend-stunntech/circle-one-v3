@@ -1,0 +1,4 @@
+Hi,
+You are invited to join bluewhirl.io by {{ profile.invited_by.first_name }} {{ profile.invited_by.last_name }}. Your login credentials are:
+username: {{ profile.user.username }}
+password: {{ password }}

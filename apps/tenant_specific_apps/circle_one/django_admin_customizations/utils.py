@@ -1,12 +1,12 @@
 from django.contrib import admin
 from django.contrib.admin.options import BaseModelAdmin
 
-from apps.tenant_specific_apps.circle_one.users.authorization.roles import is_saas_admin
+from apps.tenant_specific_apps.circle_one.users.authorization.roles import is_tenant_admin
 
 
 class ModelPermissionMixin(BaseModelAdmin):
     def is_admin(self, request):
-        return is_saas_admin(request.user)
+        return is_tenant_admin(request.user)
 
     def has_module_permission(self, request):
         return self.is_admin(request)

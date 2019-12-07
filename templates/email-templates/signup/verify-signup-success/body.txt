@@ -1,0 +1,10 @@
+Hello ${this.user.profile.firstName},
+
+Your bluewhirl account has been verified and you can now start using Bluewhirl.
+
+Go to ${this.loginLink} to login.
+
+Please feel free to write to us for any assistance and our team would be happy to help.
+
+
+Regards

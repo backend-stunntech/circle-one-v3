@@ -1,0 +1,12 @@
+Hello ${this.user.profile.firstName},
+
+A new account has been created for you on Bluewhirl.
+
+Get started with using your support portal by activating your account.
+
+Go to {{ request.verification_link }} to activate your account.
+
+Please feel free to write to us for any assistance and our team would be happy to help.
+
+
+Regards

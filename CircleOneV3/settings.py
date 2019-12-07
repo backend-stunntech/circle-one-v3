@@ -66,7 +66,8 @@ TENANT_APPS = (
     'django.contrib.contenttypes',
 
     # tenant specific apps are added here
-    'apps.tenant_specific_apps.circle_one.users'
+    'apps.tenant_specific_apps.circle_one.users',
+    'apps.tenant_specific_apps.circle_one.customers'
 
 )
 
@@ -76,6 +77,7 @@ INSTALLED_APPS = (
 
     'django.contrib.contenttypes',
     'apps.tenant_specific_apps.circle_one.users',
+    'apps.tenant_specific_apps.circle_one.customers',
 
     'django.contrib.auth',
     'django.contrib.sessions',
@@ -107,12 +109,12 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-ROOT_URLCONF = 'apps.tenant_specific_apps.circle_one.urls'
+ROOT_URLCONF = 'apps.tenant_specific_apps.urls'
 
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -186,9 +188,10 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 STATIC_URL = '/static/'
-STATIC_ROOT = 'staticfiles'
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 MEDIA_URL = '/media/'
-MEDIA_ROOT = 'uploads'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+DB_UPLOAD_MEDIA_PATH = 'db-uploads'
 
 AWS_PROFILE_NAME = os.environ.get('AWS_PROFILE', 'bluewhirl')
 
@@ -206,3 +209,26 @@ FRONTEND_MASTER_DOMAIN = 'bluewhirl.io'
 # django-tenant-schemas specific
 TENANT_MODEL = 'master.Tenant'
 PUBLIC_SCHEMA_URLCONF = 'apps.master.urls'
+
+# REST API settings
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.TokenAuthentication',
+    ],
+    'PAGE_SIZE': 10,
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination'
+}
+
+SWAGGER_SETTINGS = {
+    'SECURITY_DEFINITIONS': {
+        'Bearer': {
+            'type': 'apiKey',
+            'name': 'Authorization',
+            'in': 'header'
+        }
+    }
+}
+CORS_ORIGIN_ALLOW_ALL = True
+
+DEFAULT_SENDER_EMAIL = 'noreply'
+EMAIL_CONTEXT_PROCESSORS = []

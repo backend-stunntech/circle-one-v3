@@ -1,3 +1,3 @@
 """
-See settings for default url schemaa
+See settings for default url schema
 """

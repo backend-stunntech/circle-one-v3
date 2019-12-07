@@ -1,9 +1,12 @@
-from rest_framework import mixins, viewsets
+from rest_framework import generics
 
-from apps.tenant_specific_apps.circle_one.users.models import UserProfile
-from apps.tenant_specific_apps.circle_one.users.serializers import UserSerializer
+from apps.tenant_specific_apps.circle_one.users.authorization.roles import IsTenantAdmin, IsTenantUser
+from apps.tenant_specific_apps.circle_one.users.serializers import UserProfileSerializer
 
 
-class UserViewSet(mixins.ListModelMixin, mixins.RetrieveModelMixin, viewsets.GenericViewSet):
-    queryset = UserProfile.objects.all()
-    serializer_class = UserSerializer
+class CurrentUserView(generics.RetrieveUpdateAPIView):
+    permission_classes = (IsTenantUser,)
+    serializer_class = UserProfileSerializer
+
+    def get_object(self):
+        return self.request.user.get_profile

@@ -1,0 +1,5 @@
+Your ticket is created with id ${this.refId}.
+
+The details of your ticket are as follows:
+
+Subject: ${this.title}

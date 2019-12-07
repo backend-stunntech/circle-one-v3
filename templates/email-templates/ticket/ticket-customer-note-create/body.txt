@@ -1,0 +1,2 @@
+A customer note is created on the ticket.
+Content: ${this.content}

@@ -1,0 +1,1 @@
+New CustomerNote have been created - ${this.content}
