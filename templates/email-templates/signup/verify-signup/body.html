@@ -1,15 +1,15 @@
-<p>Hello ${this.user.profile.firstName},</p>
+<p>Hello {{ request.first_name }} {{ request.last_name }},</p>
 <br>
 <p>A new account has been created for you on Bluewhirl.</p>
 <br>
 <p>Get started with using your support portal by activating your account.</p>
 <br>
 Click
-<a href="{{ request.verification_link }}>here to activate Your Account</a>
+<a href="{{ request.verification_link }}">here</a> to activate Your Account
 <br>
 <br>
 <br>
-<p>If the above URL doesn’t work, copy and paste ( ${this.verificationLink} ) into your browser.</p>
+<p>If the above URL doesn’t work, copy and paste ( {{ request.verification_link }} ) into your browser.</p>
 <br>
 <p>Please feel free to write to us for any assistance and our team would be happy to help.</p>
 <br>
