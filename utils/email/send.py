@@ -11,7 +11,7 @@ def send_email(recipient: str,
                body_html: str,
                sender=f"{settings.DEFAULT_SENDER_EMAIL}@{settings.MASTER_DOMAIN}"):
     # credentials are set via environment, which is automatically picked by boto3
-    client = boto3.Session().client('ses')
+    client = boto3.Session().client(service_name='ses', region_name='us-east-1', api_version='2010-12-01')
     charset = 'UTF-8'
     # Provide the contents of the email.
     return client.send_email(
