@@ -47,7 +47,7 @@ class Tenant(TimeStampMixin, TenantMixin):
 
     @property
     def login_link(self):
-        return f"https://{self.frontend_domain}/login"
+        return f"http://{self.frontend_domain}/login"
 
 
 class SignUpRequest(TimeStampMixin, models.Model):
@@ -91,7 +91,7 @@ class SignUpRequest(TimeStampMixin, models.Model):
 
     @property
     def verification_link(self):
-        return (f"https://{settings.MASTER_DOMAIN}"
+        return (f"http://{settings.MASTER_DOMAIN}"
                 f"{reverse('signup-verification')}"
                 f"?username={self.admin_username}&verification_token={self.verification_token}")
 
