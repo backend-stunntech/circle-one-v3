@@ -9,6 +9,7 @@ Django==2.2.8
 django-cors-headers==3.2.0
 django-filter==2.2.0
 django-rest-auth==0.9.5
+django-storages==1.8
 django-tenant-schemas==1.10.0
 djangorestframework==3.10.3
 docutils==0.15.2
@@ -21,6 +22,7 @@ jmespath==0.9.4
 MarkupSafe==1.1.1
 ordered-set==3.1.1
 packaging==19.2
+Pillow==6.2.1
 psycopg2-binary==2.8.4
 pyparsing==2.4.5
 python-dateutil==2.8.0
