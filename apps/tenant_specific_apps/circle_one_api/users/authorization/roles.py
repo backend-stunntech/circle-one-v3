@@ -1,6 +1,6 @@
 from rest_framework.permissions import BasePermission, SAFE_METHODS
 
-from apps.tenant_specific_apps.circle_one.users.models import UserProfile
+from apps.tenant_specific_apps.circle_one_api.users.models import UserProfile
 from utils.tenants import is_master_tenant
 
 
@@ -40,6 +40,19 @@ class IsTenantAdminOrReadOnlyIfTenantUser(BasePermission):
     def has_permission(self, request, view):
         return bool(
             request.method in SAFE_METHODS or
+            request.user and
+            request.user.is_authenticated and is_tenant_admin(request.user)
+        )
+
+
+class OnlyTenantAdminCanDelete(BasePermission):
+    """
+    Allows any tenant user to create, read and update. Only admin can delete.
+    """
+
+    def has_permission(self, request, view):
+        return bool(
+            request.method in SAFE_METHODS + ['POST', 'PATCH', 'PUT'] or
             request.user and
             request.user.is_authenticated and is_tenant_admin(request.user)
         )

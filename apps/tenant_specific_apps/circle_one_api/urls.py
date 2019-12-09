@@ -10,5 +10,7 @@ obtain_auth_token = swagger_auto_schema(method='post',
 
 urlpatterns = [
     path('auth/', obtain_auth_token, name='auth'),
-    path('users/', include('apps.tenant_specific_apps.circle_one.users.urls')),
+    path('users/', include('apps.tenant_specific_apps.circle_one_api.users.urls')),
+    path('customers/', include('apps.tenant_specific_apps.circle_one_api.customers.urls')),
+    path('emails/', include('apps.tenant_specific_apps.circle_one_api.emails.urls')),
 ]

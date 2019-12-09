@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/2.2/ref/settings/
 """
 import collections
+import logging.config
 import os
 
 import boto3
@@ -66,8 +67,8 @@ TENANT_APPS = (
     'django.contrib.contenttypes',
 
     # tenant specific apps are added here
-    'apps.tenant_specific_apps.circle_one.users',
-    'apps.tenant_specific_apps.circle_one.customers'
+    'apps.tenant_specific_apps.circle_one_api.users',
+    'apps.tenant_specific_apps.circle_one_api.customers'
 
 )
 
@@ -76,8 +77,8 @@ INSTALLED_APPS = (
     'apps.master',
 
     'django.contrib.contenttypes',
-    'apps.tenant_specific_apps.circle_one.users',
-    'apps.tenant_specific_apps.circle_one.customers',
+    'apps.tenant_specific_apps.circle_one_api.users',
+    'apps.tenant_specific_apps.circle_one_api.customers',
 
     'django.contrib.auth',
     'django.contrib.sessions',
@@ -192,6 +193,40 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 DB_UPLOAD_MEDIA_PATH = 'db-uploads'
+
+# Logging
+# Currently set up for django chest + django default
+logging_level = os.getenv('DJANGO_LOG_LEVEL', 'INFO')
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'console': {
+            'level': logging_level,
+            'class': 'logging.StreamHandler',
+        },
+        'mail_admins': {
+            'level': 'ERROR',
+            'class': 'django.utils.log.AdminEmailHandler'
+        }
+    },
+    'loggers': {
+        'django': {
+            'handlers': ['console'],
+            'level': logging_level,
+        },
+        'django.request': {
+            'handlers': ['mail_admins'],
+            'level': 'ERROR',
+            'propagate': True,
+        },
+        'django.security.csrf ': {
+            'handlers': ['console'],
+            'level': logging_level,
+        },
+    },
+}
+logging.config.dictConfig(LOGGING)
 
 AWS_PROFILE_NAME = os.environ.get('AWS_PROFILE', 'bluewhirl')
 

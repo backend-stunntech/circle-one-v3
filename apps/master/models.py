@@ -8,8 +8,8 @@ from django.utils.text import slugify
 from tenant_schemas.models import TenantMixin
 from tenant_schemas.utils import tenant_context
 
-from apps.tenant_specific_apps.circle_one.users.models import UserProfile
-from utils.email.send import render_and_send_mail
+from apps.tenant_specific_apps.circle_one_api.users.models import UserProfile
+from utils.send_email import render_and_send_mail
 from utils.models import TimeStampMixin
 
 
@@ -84,6 +84,7 @@ class SignUpRequest(TimeStampMixin, models.Model):
                         admin.set_password(request.password)
                         admin.save()
                         admin.get_profile.role = UserProfile.ROLE_ADMIN
+                        admin.get_prpfile.require_password_change = False
                         admin.get_profile.save()
                         request.verified = True
                         request.save()

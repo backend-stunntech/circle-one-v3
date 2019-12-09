@@ -5,7 +5,7 @@ from django.contrib.auth.models import User
 from django.db.transaction import atomic
 from rest_framework import serializers
 
-from apps.tenant_specific_apps.circle_one.users.models import UserProfile, Department, Group
+from apps.tenant_specific_apps.circle_one_api.users.models import UserProfile, Department, Group
 from utils.tenants import get_current_tenant
 
 

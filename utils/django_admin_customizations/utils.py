@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.contrib.admin.options import BaseModelAdmin
 
-from apps.tenant_specific_apps.circle_one.users.authorization.roles import is_tenant_admin
+from apps.tenant_specific_apps.circle_one_api.users.authorization.roles import is_tenant_admin
 
 
 class ModelPermissionMixin(BaseModelAdmin):

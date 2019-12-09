@@ -2,7 +2,7 @@ from django.conf import settings
 from django.db import models
 from django.dispatch import receiver
 
-from apps.tenant_specific_apps.circle_one.users.models import UserProfile
+from apps.tenant_specific_apps.circle_one_api.users.models import UserProfile
 from utils.media import delete_old_model_files, rename_model_files_from_field_verbose_name, delete_model_files
 from utils.tenants import get_current_schema_name
 

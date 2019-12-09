@@ -1,7 +1,7 @@
 from rest_framework import generics
 
-from apps.tenant_specific_apps.circle_one.users.authorization.roles import IsTenantAdmin, IsTenantUser
-from apps.tenant_specific_apps.circle_one.users.serializers import UserProfileSerializer
+from apps.tenant_specific_apps.circle_one_api.users.authorization.roles import IsTenantAdmin, IsTenantUser
+from apps.tenant_specific_apps.circle_one_api.users.serializers import UserProfileSerializer
 
 
 class CurrentUserView(generics.RetrieveUpdateAPIView):

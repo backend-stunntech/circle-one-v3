@@ -1,8 +1,8 @@
 from django.urls import path
 from rest_framework.routers import DefaultRouter
 
-from apps.tenant_specific_apps.circle_one.users import views
-from apps.tenant_specific_apps.circle_one.users.viewsets import UserProfileViewSet, GroupViewSet, DepartmentViewSet
+from apps.tenant_specific_apps.circle_one_api.users import views
+from apps.tenant_specific_apps.circle_one_api.users.viewsets import UserProfileViewSet, GroupViewSet, DepartmentViewSet
 
 api_router = DefaultRouter()
 api_router.register('', UserProfileViewSet)

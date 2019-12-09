@@ -5,12 +5,13 @@ from drf_yasg import openapi
 from drf_yasg.views import get_schema_view
 from rest_framework import permissions
 
-from apps.master.views import TenantSignupView, SignUpVerification
+from apps.master.views import TenantSignupView, SignUpVerification, AwsSnsWebHook
 
 urlpatterns = [
     path('api/v1/signup', TenantSignupView.as_view()),
     path('api/v1/signup-verification/', SignUpVerification.as_view(), name='signup-verification'),
     path('admin/', admin.site.urls),
+    path('sns-web-hook/', AwsSnsWebHook.as_view(), name='sns-web-hook')
 ]
 
 # Swagger(OpenApi) documentation urls:

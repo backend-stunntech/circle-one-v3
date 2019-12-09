@@ -7,7 +7,7 @@ from rest_framework import permissions
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('api/v1/', include('apps.tenant_specific_apps.circle_one.urls')),
+    path('api/v1/', include('apps.tenant_specific_apps.circle_one_api.urls')),
 ]
 
 

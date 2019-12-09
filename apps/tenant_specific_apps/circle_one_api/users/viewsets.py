@@ -1,9 +1,10 @@
 from rest_framework import viewsets, pagination
+from rest_framework.exceptions import PermissionDenied
 
-from apps.tenant_specific_apps.circle_one.users.authorization.roles import IsTenantAdmin, \
+from apps.tenant_specific_apps.circle_one_api.users.authorization.roles import IsTenantAdmin, \
     IsTenantAdminOrReadOnlyIfTenantUser
-from apps.tenant_specific_apps.circle_one.users.models import UserProfile, Department, Group
-from apps.tenant_specific_apps.circle_one.users.serializers import UserProfileSerializer, DepartmentSerializer, \
+from apps.tenant_specific_apps.circle_one_api.users.models import UserProfile, Department, Group
+from apps.tenant_specific_apps.circle_one_api.users.serializers import UserProfileSerializer, DepartmentSerializer, \
     GroupSerializer
 
 
@@ -18,7 +19,7 @@ class UserProfileViewSet(viewsets.ModelViewSet):
     def perform_destroy(self, instance: 'UserProfile'):
         # the only admin shall not be deleted
         if instance.is_last_admin:
-            raise PermissionError('The only admin shall not be deleted')
+            raise PermissionDenied('The only admin shall not be deleted')
 
         # delete the user instead of the profile
         instance.user.delete()

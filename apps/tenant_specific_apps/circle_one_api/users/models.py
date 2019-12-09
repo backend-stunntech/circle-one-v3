@@ -2,8 +2,8 @@ from django.conf import settings
 from django.contrib.auth.models import AbstractUser
 from django.db import models
 
-from apps.tenant_specific_apps.circle_one.users.abstract_models import AbstractUserProfile
-from utils.email.send import render_and_send_mail
+from apps.tenant_specific_apps.circle_one_api.users.abstract_models import AbstractUserProfile
+from utils.send_email import render_and_send_mail
 from utils.media import database_file_upload_path
 from utils.models import TimeStampMixin
 from utils.tenants import get_current_tenant
